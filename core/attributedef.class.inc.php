@@ -6767,6 +6767,13 @@ class AttributeExternalKey extends AttributeDBFieldVoid
 		$oValSetDef = $this->GetValuesDef();
 		$oSet = $oValSetDef->ToObjectSet($aArgs, $sContains, $iAdditionalValue);
 
+		// we will only use key & name, so let's reduce fields loaded !
+		$sTargetClass = $this->GetTargetClass();
+		$aAttToLoad = [
+			$sTargetClass => [],
+		];
+		$oSet->OptimizeColumnLoad($aAttToLoad);
+
 		return $oSet;
 	}
 
